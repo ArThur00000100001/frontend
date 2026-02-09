@@ -1,6 +1,6 @@
 export enum UserRole {
-  ADMIN = 'admin',
-  USER = 'user',
+  ADMIN = 'Admin',
+  STUDENT = 'Student',
 }
 
 export type IUser = {
@@ -10,6 +10,5 @@ export type IUser = {
   firstLastName: string;
   secondLastName: string;
   email: string;
-  password: string;
   role: UserRole;
 };

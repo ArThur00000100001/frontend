@@ -12,7 +12,7 @@ export const authGuard: CanActivateFn = (route, state) => {
 
   if (state.url == '/login') {
     if (role == UserRole.ADMIN) return router.parseUrl('/admin');
-    if (role == UserRole.USER) return router.parseUrl('/user');
+    if (role == UserRole.STUDENT) return router.parseUrl('/student');
     return true;
   }
 
@@ -20,8 +20,8 @@ export const authGuard: CanActivateFn = (route, state) => {
     if (state.url.startsWith('/admin')) return isCorrectAuth(tokenParse!);
     return true;
   }
-  if (role == UserRole.USER) {
-    if (state.url.startsWith('/user')) return isCorrectAuth(tokenParse!);
+  if (role == UserRole.STUDENT) {
+    if (state.url.startsWith('/student')) return isCorrectAuth(tokenParse!);
   }
 
   return router.parseUrl('/login');

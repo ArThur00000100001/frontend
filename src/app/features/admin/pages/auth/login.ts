@@ -1,8 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { URL } from '../../../environment/environment';
-import { IUser } from '../../models/admin.types';
-import { ILoginResponse } from '../../../../core/guards/auth.service';
+import { AuthService, ILoginResponse } from '../../../../core/guards/auth.service';
+import { Router } from '@angular/router';
+
+export type IApiResponse<T = any> = {
+  status: 'success' | 'failure';
+  data: T;
+  message: string;
+};
 
 @Component({
   selector: 'app-auth',
@@ -11,6 +17,9 @@ import { ILoginResponse } from '../../../../core/guards/auth.service';
   styleUrl: './login.scss',
 })
 export class LoginComponent {
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
+
   readonly formData = new FormGroup({
     email: new FormControl(null, [
       Validators.required,
@@ -26,21 +35,40 @@ export class LoginComponent {
   });
 
   async onSubmit() {
-    const response = await fetch(`${URL}/auth/login`, {
-      method: 'POST',
-      headers: { 'Content-type': 'application/json' },
+    if (this.formData.invalid) return;
 
-      body: JSON.stringify(this.formData.value),
-    })
-      .then((res) => {
-        console.log(res.json());
-      })
-      .catch((err) => {
-        console.log(err);
+    try {
+      const response = await fetch(`${URL}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-type': 'application/json' },
+        body: JSON.stringify(this.formData.value),
       });
 
-    // if(responser.ok){
-    //   const data = responser.
-    // }
+      if (!response.ok) {
+        throw new Error('Error en la autenticación');
+      }
+
+      const result: IApiResponse<ILoginResponse> = await response.json();
+      console.log('Respuesta del backend:', result);
+
+      if (result.status === 'success') {
+        const { access_token, user } = result.data;
+        
+        // Guardar en el servicio
+        this.authService.token.set(access_token);
+        this.authService.user.set(user);
+        
+        // Guardar en localStorage para persistencia
+        localStorage.setItem('token-raw', JSON.stringify(result.data));
+        
+        // Navegar a la página principal
+        this.router.navigate(['/admin/home']);
+      } else {
+        alert(result.message);
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      alert('Correo o contraseña incorrectos');
+    }
   }
 }
