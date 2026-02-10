@@ -1,0 +1,48 @@
+<div class="cute-market-container">
+    <header class="header">
+        <div class="header-decoration left">🥗</div>
+        <div class="header-text">
+            <h1 class="title">Friendly Market</h1>
+            <p class="subtitle">Fresh & happy groceries for your home</p>
+        </div>
+        <div class="header-decoration right">🍎</div>
+
+        <nav class="filters">
+            @for (cat of categories(); track cat) {
+            <button class="filter-pill" [class.active]="selectedCategory() === cat" (click)="selectedCategory.set(cat)">
+                {{ cat }}
+            </button>
+            }
+        </nav>
+    </header>
+
+    <div class="product-grid">
+        @for (item of products(); track item.id) {
+        <div class="product-card">
+            <div class="image-box" [style.backgroundColor]="item.color">
+                <img [ngSrc]="item.imageUrl" [alt]="item.name" width="120" height="120" class="item-img">
+                @if (item.isPopular) {
+                <span class="cute-tag">Favorite</span>
+                }
+            </div>
+
+            <div class="info">
+                <div class="category-row">
+                    <span class="category-dot" [style.backgroundColor]="item.color"></span>
+                    <span class="category-name">{{ item.category }}</span>
+                </div>
+                <h3 class="name">{{ item.name }}</h3>
+
+                <div class="footer">
+                    <div class="price-box">
+                        <span class="price">${{ item.price | number:'1.2-2' }}</span>
+                    </div>
+                    <button class="add-btn" (click)="onOrder(item)">
+                        <span class="icon">＋</span> Add
+                    </button>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+</div>

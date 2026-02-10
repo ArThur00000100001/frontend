@@ -1,0 +1,39 @@
+:host {
+  display: block;
+}
+
+.auth-container {
+  min-height: 100vh;
+  background-color: #f1f5f9;
+}
+
+.form-control:focus {
+  border-color: #6366f1 !important;
+  box-shadow: 0 0 0 0.25rem rgba(99, 102, 241, 0.1) !important;
+}
+
+.btn-primary:hover {
+  background-color: #4338ca !important;
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.card {
+  transition: transform 0.3s ease;
+}
+
+/* Ajustes para Bootstrap Icons */
+.bi {
+  vertical-align: middle;
+  line-height: 1;
+}
+
+/* Estilo para el input-group con el botón de toggle */
+.input-group {
+  .btn-outline-secondary:focus {
+    box-shadow: none !important;
+  }
+}

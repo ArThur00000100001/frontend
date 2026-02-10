@@ -1,0 +1,81 @@
+<div class="layout-wrapper">
+    <!-- Sidebar -->
+    <aside class="sidebar" [class.collapsed]="!isSidebarOpen()" [class.mobile-open]="isSidebarOpen()">
+        <div class="sidebar-logo">
+            <span class="logo-icon">🧺</span>
+            <span>Friendly Market</span>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a routerLink="/admin/home" routerLinkActive="active" class="nav-item">
+                <i class="bi bi-grid-fill"></i>
+                <span class="nav-text">Dashboard</span>
+            </a>
+
+            <a routerLink="/admin/products" routerLinkActive="active" class="nav-item">
+                <i class="bi bi-apple"></i>
+                <span class="nav-text">Inventory</span>
+            </a>
+
+            <a routerLink="/admin/orders" routerLinkActive="active" class="nav-item">
+                <i class="bi bi-cart-fill"></i>
+                <span class="nav-text">Active Orders</span>
+            </a>
+
+            <a routerLink="/admin/users" routerLinkActive="active" class="nav-item">
+                <i class="bi bi-people-fill"></i>
+                <span class="nav-text">Customers</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <a routerLink="/admin/settings" routerLinkActive="active" class="nav-item">
+                <i class="bi bi-gear-fill"></i>
+                <span class="nav-text">Settings</span>
+            </a>
+            <a href="#" class="nav-item text-danger">
+                <i class="bi bi-door-open-fill"></i>
+                <span class="nav-text">Sign Out</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Sidebar Overlay for mobile -->
+    <div class="sidebar-overlay" [class.visible]="isSidebarOpen()" (click)="toggleSidebar()"></div>
+
+    <!-- Main Content Area -->
+    <div class="main-content" [class.full-width]="!isSidebarOpen()">
+
+        <!-- Topbar Header -->
+        <header class="topbar">
+            <div class="d-flex align-items-center">
+                <button class="hamburger-btn" [class.is-active]="isSidebarOpen()" (click)="toggleSidebar()"
+                    aria-label="Toggle navigation menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="ms-4">
+                    <h2 class="page-title">Management Panel</h2>
+                </div>
+            </div>
+
+            <div class="user-profile">
+                <div class="user-info">
+                    <p class="name">Store Manager</p>
+                    <p class="role">Admin Access</p>
+                </div>
+                <div class="avatar">
+                    👨‍🍳
+                </div>
+            </div>
+        </header>
+
+        <!-- Dynamic Content -->
+        <main class="page-container">
+            <div class="fade-in">
+                <router-outlet></router-outlet>
+            </div>
+        </main>
+    </div>
+</div>

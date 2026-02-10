@@ -1,19 +1,90 @@
-<div class="container d-flex gap-5">
-    <div class=""></div>
-    <div>
-        <div class="card">
-            <div class="card card-header bg-orange">
-                Login
-            </div>
-            <div class="card card-body">
-                <form class="form" [formGroup]="formData" (ngSubmit)="onSubmit()">
-                    <label class="form-label">Correo electrónico</label>
-                    <input type="text" formControlName="email" class="form-control mb-2">
-                    <label class="form-label">Contraseña</label>
-                    <input type="password" formControlName="password" class="form-control mb-2">
-                    <button type="submit" class="btn btn-dark">Login</button>
-                </form>
+<main class="auth-container bg-light min-vh-100 d-flex align-items-center justify-content-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8">
+                <div class="card border-0 shadow-lg overflow-hidden" style="border-radius: 1.25rem;">
+                    <div class="row g-0">
+                        <!-- Sección del Formulario -->
+                        <div class="col-lg-6 p-4 p-md-5 bg-white">
+                            <header class="mb-4">
+                                <h1 class="h3 fw-bold text-dark mb-2">Bienvenido de nuevo</h1>
+                                <p class="text-muted small">Inicia sesión para gestionar tu plataforma</p>
+                            </header>
+
+                            <form [formGroup]="formData" (ngSubmit)="onSubmit()">
+                                <div class="mb-3">
+                                    <label for="email" class="form-label fw-medium text-secondary small">Correo
+                                        electrónico</label>
+                                    <input id="email" type="email" formControlName="email"
+                                        class="form-control form-control-lg border-2 shadow-none"
+                                        [class.is-invalid]="formData.get('email')?.invalid && formData.get('email')?.touched"
+                                        placeholder="admin@ejemplo.com" autocomplete="email"
+                                        style="border-radius: 0.75rem; font-size: 0.9rem;">
+                                    @if (formData.get('email')?.invalid && formData.get('email')?.touched) {
+                                    <div class="invalid-feedback">Introduce un correo válido</div>
+                                    }
+                                    @if ((formData.get('email')?.errors?.['minlength'] ||
+                                    formData.get('email')?.errors?.['maxlength']) && formData.get('email')?.touched) {
+                                    <div class="invalid-feedback">Número de caracteres permitidos: 12-50</div>
+                                    }
+                                </div>
+
+                                <div class="mb-4">
+                                    <label for="password"
+                                        class="form-label fw-medium text-secondary small">Contraseña</label>
+                                    <div class="input-group">
+                                        <input id="password" [type]="showPassword() ? 'text' : 'password'"
+                                            formControlName="password"
+                                            class="form-control form-control-lg border-2 shadow-none border-end-0"
+                                            [class.is-invalid]="formData.get('password')?.invalid && formData.get('password')?.touched"
+                                            placeholder="••••••••" autocomplete="current-password"
+                                            style="border-radius: 0.75rem 0 0 0.75rem; font-size: 0.9rem;">
+                                        <button
+                                            class="btn btn-outline-secondary border-2 border-start-0 bg-light-subtle"
+                                            type="button" (click)="showPassword.set(!showPassword())"
+                                            [attr.aria-label]="showPassword() ? 'Ocultar contraseña' : 'Mostrar contraseña'"
+                                            style="border-radius: 0 0.75rem 0.75rem 0; border-color: #dee2e6;">
+                                            <i class="bi" [class.bi-eye-slash]="showPassword()"
+                                                [class.bi-eye]="!showPassword()"></i>
+                                        </button>
+                                        @if (formData.get('password')?.invalid && formData.get('password')?.touched) {
+                                        <div class="invalid-feedback d-block">Mínimo 4 caracteres</div>
+                                        }
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold shadow-sm"
+                                    [disabled]="formData.invalid || isSubmitting()"
+                                    style="border-radius: 0.75rem; background-color: #4f46e5; border: none;">
+                                    @if (isSubmitting()) {
+                                    <span class="spinner-border spinner-border-sm me-2" role="status"
+                                        aria-hidden="true"></span>
+                                    Cargando...
+                                    } @else {
+                                    Iniciar sesión
+                                    }
+                                </button>
+                            </form>
+
+                            <footer class="mt-4 text-center">
+                                <p class="text-muted small mb-0">¿Problemas para acceder? <a href="#"
+                                        class="text-decoration-none fw-semibold" style="color: #4f46e5;">Soporte</a></p>
+                            </footer>
+                        </div>
+
+                        <!-- Sección Visual (Oculta en móviles) -->
+                        <div class="col-lg-6 d-none d-lg-flex flex-column justify-content-center p-5 text-white"
+                            style="background: linear-gradient(135deg, #6366f1 0%, #4338ca 100%);">
+                            <h2 class="display-6 fw-bold mb-3">Eficiencia y Control</h2>
+                            <p class="lead opacity-75">Optimiza tus procesos con nuestra plataforma de gestión avanzada.
+                                Seguridad y velocidad en cada operación.</p>
+                            <div class="mt-4">
+                                <i class="bi bi-shield-check display-1 opacity-25"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</main>

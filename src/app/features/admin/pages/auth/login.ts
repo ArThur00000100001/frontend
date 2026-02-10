@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { URL } from '../../../environment/environment';
 import { AuthService, ILoginResponse } from '../../../../core/guards/auth.service';
@@ -15,10 +15,14 @@ export type IApiResponse<T = any> = {
   imports: [ReactiveFormsModule],
   templateUrl: './login.html',
   styleUrl: './login.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+
+  readonly showPassword = signal(false);
+  readonly isSubmitting = signal(false);
 
   readonly formData = new FormGroup({
     email: new FormControl(null, [
@@ -37,6 +41,7 @@ export class LoginComponent {
   async onSubmit() {
     if (this.formData.invalid) return;
 
+    this.isSubmitting.set(true);
     try {
       const response = await fetch(`${URL}/auth/login`, {
         method: 'POST',
@@ -44,23 +49,20 @@ export class LoginComponent {
         body: JSON.stringify(this.formData.value),
       });
 
-      if (!response.ok) {
-        throw new Error('Error en la autenticación');
-      }
-
       const result: IApiResponse<ILoginResponse> = await response.json();
+
       console.log('Respuesta del backend:', result);
 
       if (result.status === 'success') {
         const { access_token, user } = result.data;
-        
+
         // Guardar en el servicio
         this.authService.token.set(access_token);
         this.authService.user.set(user);
-        
-        // Guardar en localStorage para persistencia
+
+        // Guardar en localStorage para la persistencia
         localStorage.setItem('token-raw', JSON.stringify(result.data));
-        
+
         // Navegar a la página principal
         this.router.navigate(['/admin/home']);
       } else {
@@ -69,6 +71,8 @@ export class LoginComponent {
     } catch (error) {
       console.error('Login error:', error);
       alert('Correo o contraseña incorrectos');
+    } finally {
+      this.isSubmitting.set(false);
     }
   }
 }
