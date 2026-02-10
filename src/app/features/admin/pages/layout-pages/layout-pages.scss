@@ -1,12 +1,12 @@
-// Cute Market Layout Tokens
-$bg-main: #fcfaff;
-$bg-sidebar: #ffffff;
-$accent-pink: #FFD1E3;
-$accent-pink-dark: #FFB3D1;
-$active-text: #9B2C2C;
-$text-main: #4a5568;
-$text-light: #a0aec0;
-$card-shadow: 0 10px 25px -5px rgba(255, 179, 209, 0.15);
+// Muted "Soft Sand" Layout Tokens
+$bg-main: #f5f2ed; // More muted, less "pure white"
+$bg-sidebar: #faf9f6;
+$accent-soft: #e9e2d7;
+$accent-active: #dccfb8;
+$active-text: #5d4037;
+$text-main: #3e3e3e;
+$text-light: #8b8b8b;
+$card-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05); // More subtle shadow
 $sidebar-width: 280px;
 $sidebar-collapsed-width: 90px;
 $topbar-height: 80px;
@@ -17,6 +17,7 @@ $transition-bounce: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   min-height: 100vh;
   background-color: $bg-main;
   font-family: 'Outfit', 'Inter', sans-serif;
+  color: $text-main;
 }
 
 .layout-wrapper {
@@ -39,7 +40,7 @@ $transition-bounce: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   flex-direction: column;
   border-radius: 32px;
   box-shadow: $card-shadow;
-  border: 1px solid #f7fafc;
+  border: 1px solid rgba(0, 0, 0, 0.03);
   overflow: hidden;
 
   &.collapsed {
@@ -72,7 +73,7 @@ $transition-bounce: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   .logo-icon {
     font-size: 2.2rem;
     margin-right: 0.75rem;
-    filter: drop-shadow(0 4px 8px rgba(255, 179, 209, 0.4));
+    filter: sepia(0.2);
   }
 }
 
@@ -103,35 +104,34 @@ $transition-bounce: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
 
   &:hover {
-    background-color: #f7fafc;
+    background-color: rgba(0, 0, 0, 0.03);
     color: $text-main;
     transform: translateX(5px);
     
-    i { transform: scale(1.2) rotate(-5deg); }
+    i { transform: scale(1.1) rotate(-3deg); }
   }
 
   &.active {
-    background-color: $accent-pink;
+    background-color: $accent-active;
     color: $active-text;
-    border-color: $accent-pink-dark;
-    box-shadow: 0 10px 20px -5px rgba(255, 179, 209, 0.4);
+    border-color: darken($accent-active, 5%);
+    box-shadow: 0 8px 15px -3px rgba(0, 0, 0, 0.08);
 
     i { color: $active-text; }
   }
 }
 
-/* Fix for the "grey" container issue user mentioned */
 .nav-item:active, .nav-item:focus {
   outline: none;
-  background-color: lighten($accent-pink, 5%);
+  background-color: darken($accent-active, 2%);
 }
 
 .sidebar-footer {
   padding: 1rem;
-  border-top: 2px solid #f7fafc;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
   
   .nav-item.text-danger {
-    color: #e53e3e;
+    color: #c53030;
     &:hover { background-color: #fff5f5; }
   }
 }
@@ -151,7 +151,7 @@ $transition-bounce: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 /* Topbar Styling */
 .topbar {
   height: $topbar-height;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(250, 249, 246, 0.85); // Muted topbar
   backdrop-filter: blur(15px);
   display: flex;
   align-items: center;
@@ -164,8 +164,8 @@ $transition-bounce: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .hamburger-btn {
-  background: #f7fafc;
-  border: 2px solid #edf2f7;
+  background: #ede8e1;
+  border: 2px solid #e1dbd2;
   cursor: pointer;
   width: 45px;
   height: 45px;
@@ -185,18 +185,14 @@ $transition-bounce: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   span {
     width: 20px;
     height: 3px;
-    background-color: $text-main;
+    background-color: #5d4037;
     border-radius: 10px;
     transition: all 0.3s ease;
   }
 
   &.is-active {
-    background: $accent-pink;
-    border-color: $accent-pink-dark;
-    
-    span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-    span:nth-child(2) { opacity: 0; }
-    span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+    background: $accent-active;
+    border-color: darken($accent-active, 10%);
   }
 }
 
@@ -204,32 +200,25 @@ $transition-bounce: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   margin: 0;
   font-size: 1.5rem;
   font-weight: 900;
-  color: #2d3748;
-  letter-spacing: -0.04em;
+  color: #3e3e3e;
 }
 
 .user-profile {
   display: flex;
   align-items: center;
   gap: 1rem;
-  background: white;
+  background: #fafaf9;
   padding: 0.5rem 0.5rem 0.5rem 1.25rem;
   border-radius: 20px;
-  border: 2px solid #f7fafc;
+  border: 2px solid #e9e4de;
   transition: $transition-bounce;
   cursor: pointer;
-
-  &:hover {
-    transform: scale(1.02);
-    box-shadow: 0 8px 15px -5px rgba(0,0,0,0.05);
-  }
 
   .avatar {
     width: 42px;
     height: 42px;
     border-radius: 15px;
-    background: #E6F4EA;
-    color: #2F855A;
+    background: #e9e4de;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -238,8 +227,8 @@ $transition-bounce: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
   .user-info {
     text-align: right;
-    .name { font-weight: 800; font-size: 0.95rem; margin: 0; color: #2d3748; }
-    .role { font-size: 0.75rem; margin: 0; color: $text-light; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+    .name { font-weight: 800; font-size: 0.95rem; margin: 0; color: #3e3e3e; }
+    .role { font-size: 0.75rem; margin: 0; color: #8b8b8b; font-weight: 600; text-transform: uppercase; }
   }
 }
 
