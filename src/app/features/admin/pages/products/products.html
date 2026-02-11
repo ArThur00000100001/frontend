@@ -13,17 +13,25 @@
                 {{ cat }}
             </button>
             }
+
         </nav>
+
+        <div class="mt-4">
+            <button class="btn btn-dark" (click)="openFormProduct('create')">Añadir Producto <i
+                    class="bi bi-plus-square"></i></button>
+        </div>
+
+
     </header>
 
     <div class="product-grid">
-        @for (item of products(); track item.id) {
+        @for (item of items(); track item.id) {
         <div class="product-card">
             <div class="image-box" [style.backgroundColor]="item.color">
-                <img [ngSrc]="item.imageUrl" [alt]="item.name" width="120" height="120" class="item-img">
-                @if (item.isPopular) {
+                <img [ngSrc]="item.image" [alt]="item.product" width="120" height="120" class="item-img">
+                <!-- @if (item.isPopular) {
                 <span class="cute-tag">Favorite</span>
-                }
+                } -->
             </div>
 
             <div class="info">
@@ -31,14 +39,14 @@
                     <span class="category-dot" [style.backgroundColor]="item.color"></span>
                     <span class="category-name">{{ item.category }}</span>
                 </div>
-                <h3 class="name">{{ item.name }}</h3>
+                <h3 class="name">{{ item.product }}</h3>
 
                 <div class="footer">
                     <div class="price-box">
                         <span class="price">${{ item.price | number:'1.2-2' }}</span>
                     </div>
-                    <button class="add-btn" (click)="onOrder(item)">
-                        <span class="icon">+</span> Add
+                    <button class="add-btn" (click)="openFormProduct('edit', item)">
+                        <span class="icon"><i class="bi bi-pencil-square"></i></span>
                     </button>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { URL } from '../../../environment/environment';
+import { API } from '../../../environment/environment';
 import { AuthService, ILoginResponse } from '../../../../core/guards/auth.service';
 import { Router } from '@angular/router';
 
@@ -43,7 +43,7 @@ export class LoginComponent {
 
     this.isSubmitting.set(true);
     try {
-      const response = await fetch(`${URL}/auth/login`, {
+      const response = await fetch(`${API}/auth/login`, {
         method: 'POST',
         headers: { 'Content-type': 'application/json' },
         body: JSON.stringify(this.formData.value),

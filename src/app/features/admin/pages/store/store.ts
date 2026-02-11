@@ -2,6 +2,9 @@ import { Component, ChangeDetectionStrategy, signal, computed, inject } from '@a
 import { CommonModule } from '@angular/common';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap/modal';
 import { storeFormComponent } from './store-form/store-form';
+import { API } from '../../../environment/environment';
+import { IApiResponse } from '../auth/login';
+import { IItemStore } from '../../models/admin.types';
 
 interface Product {
   id: number;
@@ -23,6 +26,7 @@ interface Product {
 export class StoreComponent {
   readonly modalService = inject(NgbModal);
 
+  readonly itemStore = signal<IItemStore[]>([]);
   // Dummy data for design visualization
   products = signal<Product[]>([
     {
@@ -74,11 +78,11 @@ export class StoreComponent {
   openStoreForm() {
     const ref = this.modalService.open(storeFormComponent, {
       size: 'lg',
-      //backdrop: 'static',
+      backdrop: 'static',
     });
 
     const component: storeFormComponent = ref.componentInstance;
 
-    const result = ref.result;
+    const result = component;
   }
 }

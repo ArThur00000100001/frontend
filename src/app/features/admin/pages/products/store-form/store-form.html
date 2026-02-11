@@ -29,13 +29,13 @@
 
                 <!-- Prices and Stock -->
                 <div class="form-row">
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label for="store_price">Store Cost ($)</label>
                         <div class="input-wrapper">
                             <span class="input-icon">💰</span>
                             <input type="number" id="store_price" placeholder="0.00" formControlName="store_price">
                         </div>
-                    </div>
+                    </div> -->
                     <div class="form-group">
                         <label for="price">Selling Price ($)</label>
                         <div class="input-wrapper">
@@ -75,6 +75,16 @@
                         <label for="color">Theme Color</label>
                         <div class="input-wrapper">
                             <input type="color" id="color" class="color-picker" value="#ffb3d1" formControlName="color">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="stock">Image Url</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">🆕</span>
+                            <input type="text" placeholder="https://..." formControlName="image">
                         </div>
                     </div>
                 </div>

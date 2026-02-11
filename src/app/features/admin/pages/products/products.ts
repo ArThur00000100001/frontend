@@ -1,5 +1,12 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { NgOptimizedImage, DecimalPipe } from '@angular/common';
+import { single } from 'rxjs';
+import { IProduct } from '../../models/admin.types';
+import { read } from '@popperjs/core';
+import { API } from '../../../environment/environment';
+import { IApiResponse } from '../auth/login';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap/modal';
+import { ProductFormComponent } from './store-form/store-form';
 
 interface Product {
   id: string;
@@ -23,6 +30,9 @@ interface Product {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductsComponent {
+  readonly modalService = inject(NgbModal);
+
+  readonly items = signal<IProduct[]>([]);
   readonly products = signal<Product[]>([
     {
       id: '1',
@@ -100,10 +110,33 @@ export class ProductsComponent {
     },
   ]);
 
+  constructor() {
+    this.getList();
+  }
+  async getList() {
+    const response = await fetch(`${API}/products`);
+    const data: IApiResponse<IProduct[]> = await response.json();
+    this.items.set(data.data);
+    console.log('aqui', data);
+  }
+
   readonly categories = signal<string[]>(['All', 'Vegetables', 'Fruits', 'Dairy', 'Bakery']);
   readonly selectedCategory = signal<string>('All');
 
   onOrder(product: Product) {
     console.log(`Added to cart: ${product.name}`);
+  }
+
+  async openFormProduct(mode: 'edit' | 'create', item: IProduct | null = null) {
+    const ref = this.modalService.open(ProductFormComponent, {
+      size: 'lg',
+    });
+    const component: ProductFormComponent = ref.componentInstance;
+    if (mode == 'edit') {
+      component.mode.set(mode);
+      component.item.set(item);
+    }
+    const result = await ref.result;
+    console.log('aqui es en el modal', result);
   }
 }
