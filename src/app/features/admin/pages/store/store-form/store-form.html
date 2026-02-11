@@ -1,0 +1,91 @@
+<div class="form-overlay">
+    <div class="form-card">
+        <header class="form-header">
+            <div class="title-wrapper">
+                <h2 class="title">✨ Add New Magic Product ✨</h2>
+                <p class="subtitle">Complete the details to stock your shop!</p>
+            </div>
+            <button class="btn-close">✕</button>
+        </header>
+
+        <form class="product-form" [formGroup]="formData">
+            <div class="form-body">
+                <!-- Main Info -->
+                <div class="form-group full-width">
+                    <label for="product">Product Name</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">🏷️</span>
+                        <input type="text" id="product" placeholder="e.g. Strawberry Cake" formControlName="product">
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="description">Description</label>
+                    <div class="input-wrapper">
+                        <textarea id="description" rows="3" placeholder="Tell us more about this treat..."
+                            formControlName="description"></textarea>
+                    </div>
+                </div>
+
+                <!-- Prices and Stock -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="store_price">Store Cost ($)</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">💰</span>
+                            <input type="number" id="store_price" placeholder="0.00" formControlName="store_price">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Selling Price ($)</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">💎</span>
+                            <input type="number" id="price" placeholder="0.00" formControlName="price">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="stock">Stock Quantity</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">📦</span>
+                            <input type="number" id="stock" placeholder="0" formControlName="stock">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="calories">Calories</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">🔥</span>
+                            <input type="number" id="calories" placeholder="0" formControlName="calories">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Category and Color -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">📂</span>
+                            <input type="text" id="category" placeholder="e.g. Bakery" formControlName="category">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="color">Theme Color</label>
+                        <div class="input-wrapper">
+                            <input type="color" id="color" class="color-picker" value="#ffb3d1" formControlName="color">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="form-footer">
+                <button type="button" class="btn btn-cancel">Cancel</button>
+                <button type="submit" class="btn btn-save">
+                    <span>✨ Create Product</span>
+                </button>
+            </footer>
+        </form>
+    </div>
+</div>

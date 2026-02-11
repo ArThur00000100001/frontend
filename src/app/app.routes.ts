@@ -7,6 +7,7 @@ import { ProductsComponent } from './features/admin/pages/products/products';
 import { OrdersComponent } from './features/admin/pages/orders/orders';
 import { UsersComponent } from './features/admin/pages/users/users';
 import { SettingsComponent } from './features/admin/pages/settings/settings';
+import { StoreComponent } from './features/admin/pages/store/store';
 
 export const routes: Routes = [
   {
@@ -21,6 +22,7 @@ export const routes: Routes = [
           { path: '', redirectTo: 'home', pathMatch: 'full' },
           { path: 'home', component: HomeComponent },
           { path: 'products', component: ProductsComponent },
+          { path: 'shop', component: StoreComponent },
           { path: 'orders', component: OrdersComponent },
           { path: 'users', component: UsersComponent },
           { path: 'settings', component: SettingsComponent },

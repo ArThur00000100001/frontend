@@ -1,0 +1,93 @@
+<div class="store-container">
+    <header class="store-header">
+        <div class="header-content">
+            <div class="title-group">
+                <h1 class="title">Kawaii Shop ✨</h1>
+                <p class="subtitle">Pick your favorite treats!</p>
+            </div>
+
+            <div class="cart-summary">
+                <div class="cart-info">
+                    <span class="cart-label">Your Bag</span>
+                    <span class="cart-count">{{ totalItems() }} items</span>
+                </div>
+                <div class="cart-icon">
+                    <span class="icon">🛒</span>
+                    @if (totalItems() > 0) {
+                    <span class="badge">{{ totalItems() }}</span>
+                    }
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="store-layout">
+        <div class="products-section">
+            <div class="section-controls">
+                <button class="btn-create-product" (click)="openStoreForm()">
+                    <!-- <span class="icon">✨</span> -->
+                    <span class="text">Add New Product to Store</span>
+                </button>
+            </div>
+
+            <div class="product-grid">
+                @for (product of products(); track product.id) {
+                <div class="product-card" [style.--accent-color]="product.color">
+                    <div class="image-wrapper" [style.background-color]="product.color">
+                        <span class="emoji">{{ product.image }}</span>
+                        <span class="category-tag">{{ product.category }}</span>
+                    </div>
+
+                    <div class="product-details">
+                        <h3 class="product-name">{{ product.name }}</h3>
+                        <div class="price-row">
+                            <span class="price">${{ product.price | number:'1.2-2' }}</span>
+                        </div>
+
+                        <div class="actions">
+                            @if (getQuantity(product.id) === 0) {
+                            <button class="btn btn-add-full">
+                                <span class="icon">➕</span> Add to Cart
+                            </button>
+                            } @else {
+                            <div class="quantity-controls">
+                                <button class="btn-round btn-remove">
+                                    <span class="icon">➖</span>
+                                </button>
+                                <span class="quantity">{{ getQuantity(product.id) }}</span>
+                                <button class="btn-round btn-add">
+                                    <span class="icon">➕</span>
+                                </button>
+                            </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+
+        @if (totalItems() > 0) {
+        <aside class="cart-sidebar">
+            <div class="sidebar-header">
+                <h3>Current Order</h3>
+            </div>
+
+            <div class="cart-items">
+                <!-- Logic for listing items would go here -->
+                <p class="placeholder-text">Order details will appear here ✨</p>
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="total-row">
+                    <span>Subtotal</span>
+                    <span>${{ totalPrice() | number:'1.2-2' }}</span>
+                </div>
+                <button class="btn btn-checkout">
+                    Checkout Now ✨
+                </button>
+            </div>
+        </aside>
+        }
+    </main>
+</div>
